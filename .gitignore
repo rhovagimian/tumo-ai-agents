@@ -3,3 +3,4 @@ dist/
 .env
 *.js
 !*.config.js
+.DS_Store
