@@ -41,4 +41,4 @@ npx tsx src/01-hello-claude.ts
 
 ## Workshop Leader
 
-**Raffi Hovagimian** — CTO & Founder of ReadySettlePay
+**Raffi Hovagimian** — Software Engineer at Meta
