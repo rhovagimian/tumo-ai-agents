@@ -52,4 +52,4 @@ Each day's folder is self-contained with its own `package.json`. You can jump in
 
 ## Workshop Leader
 
-**Raffi Hovagimian** — CTO & Founder of ReadySettlePay, Manager at Accenture
+**Raffi Hovagimian** — Software Engineer at Meta
