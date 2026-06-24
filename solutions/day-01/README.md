@@ -1,9 +1,5 @@
 # Day 1: What Are AI Agents?
 
-> **This is starter code.** Fill in the `TODO` comments as we build together in class.
-> Stuck or catching up? The finished version is in [`solutions/day-01`](../solutions/day-01/).
-
-
 ## What We Learned
 
 - The difference between a chatbot and an AI agent

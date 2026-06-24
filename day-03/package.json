@@ -1,0 +1,15 @@
+{
+  "name": "tumo-day-03",
+  "version": "1.0.0",
+  "description": "Day 3: Tools - Giving Your Agent Hands",
+  "scripts": {
+    "first-tool": "tsx src/01-first-tool.ts",
+    "multiple": "tsx src/03-multiple-tools.ts",
+    "your-tool": "tsx src/04-your-own-tool.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

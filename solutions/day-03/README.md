@@ -1,0 +1,29 @@
+# Day 3: Tools — Giving Your Agent Hands
+
+## What We Learned
+- A tool is a function in YOUR code that Claude can request
+- Claude decides WHICH tool and WHAT inputs — your code runs it
+- The flow: define → Claude asks → you run → send result back
+- Built and wired up a custom tool
+
+## Setup
+```bash
+cd day-03
+npm install
+export ANTHROPIC_API_KEY="your-key-here"
+```
+
+## Scripts
+| File | What it does | Run it |
+|------|-------------|--------|
+| `src/01-first-tool.ts` | Full calculator tool flow | `npm run first-tool` |
+| `src/03-multiple-tools.ts` | Claude picks between two tools | `npm run multiple` |
+| `src/04-your-own-tool.ts` | Template to build your own tool | `npm run your-tool` |
+
+## Key Idea
+**Claude does NOT run your tools.** It sends a message ASKING to use one.
+Your code runs the real function and sends the result back. Claude is the
+brain; your code is the hands.
+
+## Tomorrow
+We wrap this in a loop so Claude can use tools again and again — a real agent!

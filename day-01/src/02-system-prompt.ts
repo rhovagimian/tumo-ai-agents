@@ -4,25 +4,21 @@ const client = new Anthropic();
 
 async function main() {
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6",
     max_tokens: 1024,
-    // System prompt: sets Claude's personality and behavior
-    // Try changing this to create different characters!
-    system:
-      "You are a friendly Armenian tutor. Always greet the user in Armenian " +
-      "first, then respond in English. Keep answers short and fun.",
+    // TODO 1: Add a system prompt to give Claude a personality.
+    //   Add a line like:  system: "You are a ...",
+    //   Try: a friendly Armenian tutor who greets in Armenian first.
+
     messages: [
-      {
-        role: "user",
-        content: "What's the best food in Armenia?",
-      },
+      { role: "user", content: "What's the best food in Armenia?" },
     ],
   });
 
-  const textBlock = response.content[0];
-  if (textBlock.type === "text") {
-    console.log(textBlock.text);
-  }
+  // TODO 2: Print the reply (response.content[0].text)
+
+  // TODO 3: Run it, then change the system prompt to a totally
+  //   different character (a pirate? a robot?) and run again.
 }
 
 main();

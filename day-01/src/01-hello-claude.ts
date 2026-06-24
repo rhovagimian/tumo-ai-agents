@@ -1,29 +1,22 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-// Create a client — it automatically reads
-// ANTHROPIC_API_KEY from your environment
+// Create a client — it automatically reads ANTHROPIC_API_KEY from your environment
 const client = new Anthropic();
 
 async function main() {
-  // Send a message to Claude
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 1024,
-    messages: [
-      {
-        role: "user",
-        content:
-          "Hello! I'm a student at TUMO. What is an AI agent in 2 sentences?",
-      },
-    ],
-  });
+  // TODO 1: Call the API with client.messages.create({ ... })
+  //   - model: "claude-sonnet-4-6"
+  //   - max_tokens: 1024
+  //   - messages: an array with one { role: "user", content: "..." } message
+  //   Ask Claude: "What is an AI agent in 2 sentences?"
+  //
+  // const response = await client.messages.create({ ... });
 
-  // The response contains an array of content blocks
-  // For a simple text response, we grab the first one
-  const textBlock = response.content[0];
-  if (textBlock.type === "text") {
-    console.log(textBlock.text);
-  }
+  // TODO 2: Print Claude's reply.
+  //   The text is at response.content[0].text
+  //   (check response.content[0].type === "text" first)
+  //
+  // console.log(...);
 }
 
 main();

@@ -1,0 +1,16 @@
+{
+  "name": "tumo-day-02",
+  "version": "1.0.0",
+  "description": "Day 2: Talking to an LLM Programmatically",
+  "scripts": {
+    "multi-turn": "tsx src/01-multi-turn.ts",
+    "chat": "tsx src/02-chat-loop.ts",
+    "few-shot": "tsx src/03-few-shot.ts",
+    "structured": "tsx src/04-structured-output.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

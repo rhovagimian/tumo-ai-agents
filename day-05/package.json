@@ -1,0 +1,15 @@
+{
+  "name": "tumo-day-05",
+  "version": "1.0.0",
+  "description": "Day 5: Memory, Context & Planning + Complete Agent Template",
+  "scripts": {
+    "memory": "tsx src/01-memory.ts",
+    "planning": "tsx src/02-planning.ts",
+    "agent": "tsx src/agent.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
