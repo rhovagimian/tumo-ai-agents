@@ -14,15 +14,16 @@
 ```bash
 cd day-03
 npm install
-export ANTHROPIC_API_KEY="your-key-here"
+cp .env.example .env   # then paste your key into .env
+# (or export it directly: export ANTHROPIC_API_KEY="your-key-here")
 ```
 
 ## Scripts
 | File | What it does | Run it |
 |------|-------------|--------|
 | `src/01-first-tool.ts` | Full calculator tool flow | `npm run first-tool` |
-| `src/03-multiple-tools.ts` | Claude picks between two tools | `npm run multiple` |
-| `src/04-your-own-tool.ts` | Template to build your own tool | `npm run your-tool` |
+| `src/02-multiple-tools.ts` | Claude picks between two tools | `npm run multiple` |
+| `src/03-your-own-tool.ts` | Template to build your own tool | `npm run your-tool` |
 
 ## Key Idea
 **Claude does NOT run your tools.** It sends a message ASKING to use one.

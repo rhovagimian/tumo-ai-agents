@@ -13,7 +13,8 @@
 ```bash
 cd day-01
 npm install
-export ANTHROPIC_API_KEY="your-key-here"
+cp .env.example .env   # then paste your key into .env
+# (or export it directly: export ANTHROPIC_API_KEY="your-key-here")
 ```
 
 ## Scripts

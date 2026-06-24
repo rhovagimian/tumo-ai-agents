@@ -63,8 +63,9 @@ cd day-01
 # Install dependencies
 npm install
 
-# Set your API key
-export ANTHROPIC_API_KEY="your-key-here"
+# Set your API key — copy the example file and paste your key into .env
+cp .env.example .env
+# (or export it directly: export ANTHROPIC_API_KEY="your-key-here")
 
 # Fill in the TODOs, then run a script
 npx tsx src/01-hello-claude.ts
