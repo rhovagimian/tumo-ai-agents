@@ -4,8 +4,14 @@
   "description": "Day 3: Tools - Giving Your Agent Hands",
   "scripts": {
     "first-tool": "tsx src/01-first-tool.ts",
+    "text-stats": "tsx src/text-stats.ts",
     "multiple": "tsx src/02-multiple-tools.ts",
-    "your-tool": "tsx src/03-your-own-tool.ts"
+    "tool-selection": "tsx src/tool-selection.ts",
+    "two-tools": "tsx src/two-tools-at-once.ts",
+    "chaining": "tsx src/chaining.ts",
+    "error-handling": "tsx src/error-handling.ts",
+    "your-tool": "tsx src/03-your-own-tool.ts",
+    "dice": "tsx src/dice.ts"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
