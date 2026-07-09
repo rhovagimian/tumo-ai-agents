@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import * as fs from "fs";
 
 // ============================================================
 // Shared tools for our agent. Each tool is two things:
@@ -67,11 +68,46 @@ function lookupWord(input: any): string {
   return defs[String(input.word).toLowerCase()] || "No definition found.";
 }
 
+// ---- Long-term memory: a JSON array of facts, on disk ----
+const MEMORY_FILE = "memory.json";
+
+export function loadMemory(): string[] {
+  if (!fs.existsSync(MEMORY_FILE)) return [];
+  try {
+    return JSON.parse(fs.readFileSync(MEMORY_FILE, "utf-8"));
+  } catch {
+    return []; // unreadable file -> start fresh instead of crashing
+  }
+}
+
+function saveMemory(facts: string[]): void {
+  fs.writeFileSync(MEMORY_FILE, JSON.stringify(facts, null, 2));
+}
+
+export const rememberTool: Anthropic.Tool = {
+  name: "remember",
+  description:
+    "Save a fact worth keeping about the user (name, preferences, goals) so you still know it next run.",
+  input_schema: {
+    type: "object",
+    properties: { fact: { type: "string" } },
+    required: ["fact"],
+  },
+};
+
+function remember(input: any): string {
+  const facts = loadMemory();
+  facts.push(input.fact);
+  saveMemory(facts);
+  return "Saved to memory: " + input.fact;
+}
+
 // All tool definitions Claude can see
 export const allTools: Anthropic.Tool[] = [
   calculatorTool,
   weatherTool,
   dictionaryTool,
+  rememberTool,
 ];
 
 // The dispatcher: maps a tool name to the real function that runs it.
@@ -84,6 +120,8 @@ export function runTool(name: string, input: any): string {
       return getWeather(input);
     case "dictionary":
       return lookupWord(input);
+    case "remember":
+      return remember(input);
     default:
       return "Error: unknown tool " + name;
   }

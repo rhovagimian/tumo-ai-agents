@@ -5,18 +5,15 @@ import { allTools, runTool, loadMemory } from "./tools";
 import { dim, bold, DOT, ELBOW, getModel, handleCommand, printBanner } from "./commands";
 
 // ============================================================
-// THE COMPLETE AGENT — a chat loop, like Claude Code.
+// STRETCH ANSWER — the same agent, but Claude's text streams in
+// token by token instead of appearing all at once.
 //
-//   tools (from tools.ts)      -> abilities
-//   commands (commands.ts)     -> /model, /memory, /clear, ...
-//   messages[]                 -> working memory (this conversation)
-//   memory.json                -> long-term memory (across runs)
-//   the agent loop             -> think, act, observe, repeat
-//
-// TO MAKE IT YOUR OWN:
-//   1. Edit SYSTEM_PROMPT to give your agent a job + personality.
-//   2. Add tools in tools.ts (function + definition + dispatcher case).
-//   3. Run: npm run agent
+// Changes from agent.ts:
+//   1. client.messages.stream(...) instead of .create(...)
+//   2. stream.on("text", ...) writes each delta straight to stdout
+//   3. await stream.finalMessage() gives the assembled turn for tools
+//   4. runAgent returns void, not the final answer — the answer already
+//      streamed to the screen, so there's nothing left for main() to print
 // ============================================================
 
 const client = new Anthropic();
@@ -38,37 +35,37 @@ function buildSystemPrompt(): string {
   return SYSTEM_PROMPT + "\n\nThings you remember: " + facts.join(" ");
 }
 
-// ---- The agent loop (with guardrails) ----
-// STRETCH: stream Claude's text so it types out live. Swap
-// client.messages.create(...) for client.messages.stream(...), pipe
-// stream.on("text", ...) to stdout, and read the finished turn from
-// await stream.finalMessage().
-// Answer: solutions/day-05/src/agent-streaming.ts
+// ---- The agent loop, streaming ----
 async function runAgent(
   messages: Anthropic.MessageParam[],
   maxTurns = 10
-): Promise<string> {
+): Promise<void> {
   let turns = 0;
   while (turns < maxTurns) {
     turns++;
-    const res = await client.messages.create({
+    const stream = client.messages.stream({
       model: getModel(),
       max_tokens: 1024,
       system: buildSystemPrompt(),
       tools: allTools,
       messages,
     });
+
+    // types out live as Claude generates it
+    let started = false;
+    stream.on("text", (delta) => {
+      if (!started) {
+        process.stdout.write(`\n${DOT} `);
+        started = true;
+      }
+      process.stdout.write(delta);
+    });
+
+    const res = await stream.finalMessage();
+    if (started) process.stdout.write("\n");
     messages.push({ role: "assistant", content: res.content });
 
-    if (res.stop_reason !== "tool_use") {
-      const text = res.content.find((c) => c.type === "text");
-      return text && text.type === "text" ? text.text : "";
-    }
-
-    // Claude's plan for this step
-    for (const block of res.content) {
-      if (block.type === "text") console.log(`\n${DOT} ${block.text}`);
-    }
+    if (res.stop_reason !== "tool_use") return;
 
     // Run every tool Claude asked for, show the call, send results back
     const toolResults: Anthropic.ToolResultBlockParam[] = [];
@@ -91,7 +88,7 @@ async function runAgent(
     }
     messages.push({ role: "user", content: toolResults });
   }
-  return "Stopped: hit the max turn limit.";
+  console.log(dim("  stopped: hit the max turn limit."));
 }
 
 // ---- The chat loop ----
@@ -118,8 +115,8 @@ async function main() {
     }
 
     messages.push({ role: "user", content: input });
-    const answer = await runAgent(messages);
-    console.log(`\n${DOT} ${answer}\n`);
+    await runAgent(messages);
+    console.log();
   }
 
   rl.close();
