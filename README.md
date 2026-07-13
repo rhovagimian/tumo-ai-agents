@@ -9,6 +9,8 @@
 4. [The Agent Loop in Code](./day-04/)
 5. [Memory, Context & Planning](./day-05/)
 
+[Google Slides](https://drive.google.com/drive/folders/1Bh2cmQfCu4d_xRiwvI00oa9GU33BVIyR?usp=drive_link)
+
 **Week 2 — Build your own** *(no starter code — you fork the Day 5 agent and make it yours)*
 6. Project Kickoff & Design
 7. Build Sprint 1
